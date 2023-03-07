@@ -3,6 +3,7 @@ import Input from "../components/Input";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 
 export class LoginPage extends React.Component {
+
     state = {
         username: '',
         password: '',
@@ -33,7 +34,9 @@ export class LoginPage extends React.Component {
         this.props.actions
             .postLogin(body)
             .then((response) => {
-                this.setState({pendingApiCall: false})
+                this.setState({pendingApiCall: false}, () => {
+                    this.props.history.push('/');
+                });
             })
             .catch((error) => {
                 if (error.response) {

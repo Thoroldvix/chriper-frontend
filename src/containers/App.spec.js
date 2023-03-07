@@ -1,5 +1,5 @@
 import React from "react";
-import {MemoryRouter, Route, Routes} from "react-router-dom";
+import {MemoryRouter} from "react-router-dom";
 import {render} from "@testing-library/react";
 import App from "./App";
 
@@ -8,9 +8,7 @@ describe('App', () => {
     const setup = (path) => {
         const utils = render(
             <MemoryRouter initialEntries={[path]}>
-                <Routes>
-                    <Route path="*" element={<App/>}/>
-                </Routes>
+                <App/>
             </MemoryRouter>
         );
         return {...utils};
