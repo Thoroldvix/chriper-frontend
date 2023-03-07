@@ -2,18 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { UserSignupPage } from './pages/UserSignupPage';
 import * as apiCalls from './api/apiCalls';
 import {LoginPage} from "./pages/LoginPage";
 
 const actions = {
-    postSignup: apiCalls.signup
+    postLogin: apiCalls.login
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <LoginPage />
+    <LoginPage actions = {actions}/>
   </React.StrictMode>
 );
 
