@@ -1,7 +1,6 @@
 import React from "react";
-import {render, fireEvent, waitForElementToBeRemoved, waitFor, getByText} from "@testing-library/react";
+import {fireEvent, render, waitFor, waitForElementToBeRemoved} from "@testing-library/react";
 import UserSignupPage from "./UserSignupPage";
-import Input from "../components/Input";
 
 describe("UserSignupPage", () => {
     describe("Layout", () => {
@@ -318,6 +317,21 @@ describe("UserSignupPage", () => {
                 const errorMessage = queryByText('Cannot be null');
                 expect(errorMessage).not.toBeInTheDocument();
             })
+        });
+        it("redirects to homePage after successful signup", async () => {
+            const actions = {
+                postSignup: jest.fn().mockResolvedValue({})
+            };
+            const history = {
+                push: jest.fn()
+            }
+            const {queryByText} = setupForSubmit({actions, history});
+            fireEvent.click(button);
+
+            await waitFor(() => {
+                expect(history.push).toHaveBeenCalledWith('/');
+
+            });
         });
     });
 });
