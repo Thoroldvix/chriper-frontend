@@ -1,15 +1,22 @@
 import React from "react";
 import {MemoryRouter} from "react-router-dom";
-import {fireEvent, render} from "@testing-library/react";
+import {fireEvent, queryByTestId, render, waitFor} from "@testing-library/react";
 import App from "./App";
+import {createStore} from "redux";
+import authReducer from "../redux/authReducer";
+import {Provider} from "react-redux";
+import axios from "axios";
 
 describe('App', () => {
 
     const setup = (path) => {
+        const store = createStore(authReducer);
         const utils = render(
-            <MemoryRouter initialEntries={[path]}>
-                <App/>
-            </MemoryRouter>
+            <Provider store={store}>
+                <MemoryRouter initialEntries={[path]}>
+                    <App/>
+                </MemoryRouter>
+            </Provider>
         );
         return {...utils};
     }
@@ -77,6 +84,34 @@ describe('App', () => {
         fireEvent.click(logo);
         expect(queryByTestId('homepage')).toBeInTheDocument();
     });
+    it('displays My Profile on TopBar after login success', async () => {
+        const {queryByPlaceholderText, container, queryByText} = setup('/login');
+        const changeEvent = (content) => {
+            return {
+                target: {
+                    value: content
+                }
+            };
+        }
+        const usernameInput = queryByPlaceholderText('Your username');
+        fireEvent.change(usernameInput, changeEvent('user1'));
+        const passwordInput = queryByPlaceholderText('Your password');
+        fireEvent.change(passwordInput, changeEvent('P4ssword'));
+        const button = container.querySelector('button');
+        axios.post = jest.fn().mockResolvedValue({
+            data: {
+                id: 1,
+                username: 'user1',
+                displayName: 'display1',
+                image: 'profile1.png'
+            }
+        });
+        fireEvent.click(button);
+         await waitFor(() => {
+           expect(queryByText('My Profile')).toBeInTheDocument();
+        });
+    });
+
 });
 
 
