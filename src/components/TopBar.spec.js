@@ -37,7 +37,7 @@ describe('TopBar', () => {
         it('has application logo', () => {
             const {container} = setup();
             const image = container.querySelector('img');
-            expect(image.src).toContain('hoaxify-logo.png');
+            expect(image.src).toContain('chirper-logo.png');
         });
         it('has link to home from logo', () => {
             const {container} = setup();

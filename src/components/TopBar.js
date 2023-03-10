@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/hoaxify-logo.png";
+import logo from "../assets/chirper-logo.png";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -44,7 +44,7 @@ class TopBar extends React.Component {
                 <div className="container">
                     <nav className="navbar navbar-light navbar-expand">
                         <Link to="/" className="navbar-brand">
-                            <img src={logo} width="60" alt="Hoaxify logo"/> Hoaxify
+                            <img src={logo} width="60" alt="Chirper logo"/> Chirper
                         </Link>
                         {links}
                     </nav>
